@@ -1,0 +1,4 @@
+name: remote-build-tool-env
+dependencies:
+  - python=3.9.16
+  - flask
