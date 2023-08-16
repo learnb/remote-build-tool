@@ -12,9 +12,16 @@ scripts = config['scripts']
 @app.route('/update', methods=['GET'])
 def execute():
     script = scripts['update']
+    script_dir = os.path.dirname(script)
 
     try:
-        output = subprocess.run(script, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        output = subprocess.run(
+            script, 
+            cwd=script_dir,
+            shell=True, 
+            stdout=subprocess.PIPE, 
+            stderr=subprocess.PIPE
+        )
         if output.returncode != 0:
             return jsonify({'error': output.stderr.decode('utf-8')}), 500
     except Exception as e:
